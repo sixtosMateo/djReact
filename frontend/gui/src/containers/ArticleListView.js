@@ -1,5 +1,6 @@
 import React from 'react';
 import Articles from '../components/Article'
+import axios from 'axios';
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -13,8 +14,20 @@ for (let i = 0; i < 23; i++) {
 }
 
 class ArticleList extends React.Component{
+  state ={
+    articles:[]
+  }
+  componentDidMount(){
+    axios.get('http://127.0.0.1:8000/api/')
+      .then(res => {
+        this.setState({
+          articles: res.data
+        });
+        console.log(res.data);
+      })
+  }
    render(){
-     return <Articles data={listData}/>
+     return <Articles data={this.state.articles}/>
    }
 }
 export default ArticleList;
