@@ -29,16 +29,19 @@ class ArticleDetail extends React.Component{
    render(){
      return(
        <div>
+
          <Card title={this.state.article.title}>
             <p>{this.state.article.content}</p>
          </Card>
+
          <br />
+
          <h2>Update an article</h2>
          <CustomForm
          requestType="put"
          articleID={this.props.match.params.articleID}
          btnText="Update"/>
-         
+
          <form onSubmit={this.handleDelete}>
             <Button type="danger" htmlType="submit">Delete</Button>
          </form>

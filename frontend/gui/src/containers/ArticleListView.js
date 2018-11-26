@@ -1,5 +1,5 @@
 import React from 'react';
-import Articles from '../components/Article'
+import Articles from '../components/Article';
 import axios from 'axios';
 import CustomForm from '../components/Form';
 
@@ -13,7 +13,6 @@ class ArticleList extends React.Component{
         this.setState({
           articles: res.data
         });
-
       })
   }
    render(){

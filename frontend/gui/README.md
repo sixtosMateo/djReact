@@ -392,3 +392,117 @@ Frontend
 
                   # Navigate to Backend directory
                     <project-name>
+
+  # Navigate to Backend directory
+     <project-name>
+        <src>
+          <components>
+              # create a Form.js
+              # add these line of codes to Form.js file
+                $  import React from 'react';
+                $  import { Form, Input, Button  } from 'antd';
+                $  import axios from 'axios';
+
+                $  const FormItem = Form.Item;
+
+                  // CustomForm - used for create view and update
+                  // what we need to do for this to work we need to handle when form is submitted
+                  // since we are using it in more than one view need to specify when we are
+                      // posting something  and when to update something
+
+                  // htmltype="submit" -> indicates that button is submit type
+                  // type="primary" -> is for styling
+
+                  $ class CustomForm extends React.Component {
+                    // requestType define whether it's a POST or GET
+
+                  $  handleFormSubmit = (event, requestType, articleID) =>{
+
+                      // // so that the form does not submit the page and page doesnt reload
+                      // event.preventDefault();
+
+                  $    const title = event.target.elements.title.value;
+                  $    const content = event.target.elements.content.value;
+
+                  $    switch (requestType){
+
+                  $      case 'post':
+                  $        return axios.post('http://127.0.0.1:8000/api/',{
+                  $          title:title,
+                  $          content:content
+                  $        })
+                  $        .then(res => console.log(res))
+                  $        .catch(error => console.log(error));
+
+                  $      case'put':
+                  $        return axios.put(`http://127.0.0.1:8000/api/${articleID}/`,{
+                  $          title:title,
+                  $          content:content
+                  $        })
+                  $        .then(res => console.log(res))
+                  $        .catch(error => console.log(error));
+                  $    }
+                  $  }
+
+                  $ render() {
+                  $   return (
+                  $     <div>
+                  $       <Form onSubmit={(event) => this.handleFormSubmit(
+                  $          event,
+                  $          this.props.requestType,
+                  $          this.props.articleID)}>
+                  $         <FormItem label="Title">
+                  $           <Input name="title" placeholder="Put a title here" />
+                  $         </FormItem>
+                  $         <FormItem label="Content">
+                  $           <Input name="content"  placeholder="Put content here" />
+                  $         </FormItem>
+                  $         <FormItem>
+                  $           <Button type="primary" htmlType="submit">{this.props.btnText}</Button>
+                  $         </FormItem>
+                  $       </Form>
+                  $     </div>
+                  $   );
+                  $ }
+                  $ }
+
+                  $ export default CustomForm;
+
+          <containers>
+            ArticleListView.js
+              # add these lines of code
+                $ import CustomForm from '../components/Form';
+
+              # change these lines in return()
+                $ <div>
+                $  <Articles data={this.state.articles}/>
+                $  <br />
+                $  <h2>Create an article</h2>
+                $  <CustomForm
+                $     requestType="post"
+                $     articleID={null}
+                $     btnText="Create"/>
+                $ </div>
+
+            ArticleDetailView.js
+              # add these lines of code at top:
+                $ import axios from 'axios';
+                $ import { Button, Card } from 'antd';
+                $ import CustomForm from '../components/Form';
+
+              # add these lines of code at the bottom of Card:
+              # all of these have to be tags have to be in one <div>
+                $ <br />
+
+                $ <h2>Update an article</h2>
+                $ <CustomForm
+                $ requestType="put"
+                $ articleID={this.props.match.params.articleID}
+                $ btnText="Update"/>
+
+                $ <form onSubmit={this.handleDelete}>
+                $   <Button type="danger" htmlType="submit">Delete</Button>
+                $ </form>
+
+          # this code changes should be able to connect to server(api urls) but in django setttigs.py
+            # django REST_FRAMEWORK permissions must be temporary change so that anyone can make changes  
