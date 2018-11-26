@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import { Card } from 'antd';
 
+import CustomForm from '../components/Form';
+
 class ArticleDetail extends React.Component{
   state ={
     article:{}
@@ -19,9 +21,14 @@ class ArticleDetail extends React.Component{
   }
    render(){
      return(
-     <Card title={this.state.article.title}>
-        <p>{this.state.article.content}</p>
-     </Card>
+       <div>
+         <Card title={this.state.article.title}>
+            <p>{this.state.article.content}</p>
+         </Card>
+         <br />
+         <h2>Update an article</h2>
+         <CustomForm/>
+      </div>
    )
    }
 }

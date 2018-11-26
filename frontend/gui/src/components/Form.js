@@ -7,21 +7,34 @@ const FormItem = Form.Item;
 // what we need to do for this to work we need to handle when form is submitted
 // since we are using it in more than one view need to specify when we are
     // posting something  and when to update something
-    
+
+// htmltype="submit" -> indicates that button is submit type
+// type="primary" -> is for styling
+
 class CustomForm extends React.Component {
+
+  handleFormSubmit = (event) =>{
+    // so that the form does not submit the page and page doesnt reload
+    event.preventDefault();
+    const title = event.target.elements.title.value;
+    const content = event.target.elements.content.value;
+
+    console.log(title,content);
+  }
+
 
  render() {
    return (
      <div>
-       <Form>
+       <Form onSubmit={this.handleFormSubmit}>
          <FormItem label="Title">
-           <Input placeholder="Put a title here" />
+           <Input name="title" placeholder="Put a title here" />
          </FormItem>
          <FormItem label="Content">
-           <Input placeholder="Put content here" />
+           <Input name="content"  placeholder="Put content here" />
          </FormItem>
          <FormItem>
-           <Button type="primary">Submit</Button>
+           <Button type="primary" htmlType="submit">Submit</Button>
          </FormItem>
        </Form>
      </div>
