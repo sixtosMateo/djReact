@@ -1,4 +1,7 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import (ListAPIView,
+                                    RetrieveAPIView,
+                                    CreateAPIView
+                                    )
 
 from articles.models import Article
 from .serializers import ArticleSerializer
@@ -9,5 +12,9 @@ class ArticleListView(ListAPIView):
 
 
 class ArticleDetailView(RetrieveAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+class ArticleCreateView(CreateAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer

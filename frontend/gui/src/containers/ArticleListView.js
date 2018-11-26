@@ -17,7 +17,7 @@ class ArticleList extends React.Component{
       })
   }
    render(){
-     return (<Articles data={this.state.articles}/>
+     return (<Articles data={this.state.articles}/>)
    }
 }
 export default ArticleList;
