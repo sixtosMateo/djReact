@@ -231,7 +231,7 @@ Frontend
 
           # Sending state data into articles component base on the axios GET request
 
-    # Navigate to Backend directory
+  # Navigate to Backend directory
     <project-name>
        settings.py
 
@@ -256,7 +256,7 @@ Frontend
          # at the bottom add this:
            $ CORS_ORIGIN_ALLOW_ALL = True
 
-    # Navigate to Frontend directory
+  # Navigate to Frontend directory
       # react-router-dom - used for redirecting inside react app
       # inside terminal Navigate to <project-name>
         # install react-router-dom type:
@@ -364,3 +364,31 @@ Frontend
             $    content: 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
             $  });
             $ }
+
+  # Navigate to Backend directory
+    <project-name>
+      <src-name>
+          <api-folder-name>
+              views.py
+                # putting all generics views into one view
+                # change your views.py file to this:
+                  $ from articles.models import Article
+                  $ from .serializers import ArticleSerializer
+                  $ from rest_framework import viewsets
+
+                  $ class ArticleViewSet(viewsets.ModelViewSet):
+                  $    serializer_class = ArticleSerializer
+                  $     queryset = Article.objects.all()
+
+              urls.py
+                # router handles your ArticleViewSet into on url pattern
+                # change your urls.py file to this:
+                  $ from articles.api.views import ArticleViewSet
+                  $ from rest_framework.routers import DefaultRouter
+
+                  $ router = DefaultRouter()
+                  $ router.register(r'', ArticleViewSet, base_name='articles')
+                  $ urlpatterns = router.urls
+
+                  # Navigate to Backend directory
+                    <project-name>

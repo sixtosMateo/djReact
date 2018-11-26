@@ -1,30 +1,42 @@
-from rest_framework.generics import (ListAPIView,
-                                    RetrieveAPIView,
-                                    CreateAPIView,
-                                    DestroyAPIView,
-                                    UpdateAPIView
-                                    )
-
 from articles.models import Article
 from .serializers import ArticleSerializer
 
-class ArticleListView(ListAPIView):
-    queryset = Article.objects.all()
+from rest_framework import viewsets
+
+# putting all generics views into one view
+class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
+    queryset = Article.objects.all()
 
 
-class ArticleDetailView(RetrieveAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
+# ^^^ this code essential does everything bottom code does because of ViewSet
 
-class ArticleCreateView(CreateAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
 
-class ArticleUpdateView(UpdateAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
+# from rest_framework.generics import (ListAPIView,
+#                                     RetrieveAPIView,
+#                                     CreateAPIView,
+#                                     DestroyAPIView,
+#                                     UpdateAPIView
+#                                     )
 
-class ArticleDeleteView(DestroyAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
+
+# class ArticleListView(ListAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+#
+#
+# class ArticleDetailView(RetrieveAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+#
+# class ArticleCreateView(CreateAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+#
+# class ArticleUpdateView(UpdateAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+#
+# class ArticleDeleteView(DestroyAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
