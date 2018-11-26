@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { Card } from 'antd';
+import { Button, Card } from 'antd';
 
 import CustomForm from '../components/Form';
 
@@ -19,6 +19,13 @@ class ArticleDetail extends React.Component{
         // console.log(res.data);
       })
   }
+  // ============it doesnt reload the page after deleting ======================
+  handleDelete = (event)=>{
+    const articleID = this.props.match.params.articleID;
+    axios.delete(`http://127.0.0.1:8000/api/${articleID}/`);
+    this.props.history.push('/');
+  }
+
    render(){
      return(
        <div>
@@ -27,7 +34,14 @@ class ArticleDetail extends React.Component{
          </Card>
          <br />
          <h2>Update an article</h2>
-         <CustomForm/>
+         <CustomForm
+         requestType="put"
+         articleID={this.props.match.params.articleID}
+         btnText="Update"/>
+         
+         <form onSubmit={this.handleDelete}>
+            <Button type="danger" htmlType="submit">Delete</Button>
+         </form>
       </div>
    )
    }
