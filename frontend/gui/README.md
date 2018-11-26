@@ -1,44 +1,366 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# This tutorial can be found at the following link https://www.youtube.com/watch?v=uZgRbnIsgrA
 
-## Available Scripts
+# other resources
+  # https://ant.design/components/list/
+  # https://github.com/ottoyiu/django-cors-headers
+# https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/Installation.md
+# https://alligator.io/react/axios-react/
+# http://v1k45.com/blog/modern-django-part-1-setting-up-django-and-react/
+# https://www.django-rest-framework.org/tutorial/1-serialization/
+# https://automationpanda.com/2018/02/08/django-projects-in-visual-studio-code/
 
-In the project directory, you can run:
+Backend
+  Django framework
+    $ virtualenv env
+    $ source env/bin/activate
+    $ pip3 install django
+    $ pip3 install djangorestframework
+    $ django-admin startproject <project-name>
 
-### `npm start`
+  <project-name>
+    settings.py
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+      # add these lines in your project settings.py file:
+      $ INSTALLED_APPS{
+      $  '...',
+      $  'rest_framework',
+      $  '<src-name>',
+      $ }
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+      # add these lines of code at the bottom settings.py file:
+      $ REST_FRAMEWORK = {
+      $    # Use Django's standard `django.contrib.auth` permissions,
+      $    # or allow read-only access for unauthenticated users.
+      $    'DEFAULT_PERMISSION_CLASSES': [
+      $        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+      $    ]
+      $ }
 
-### `npm test`
+    urls.py
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+      # add these lines in your project urls.py file
+      $ from django.urls import path, include
+      $ path('api-auth/', include('rest_framework.urls')),
 
-### `npm run build`
+  <src-name>
+    # models.py
+    #  Article
+    #    title - CharField
+    #    content - TextField
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    # Terminal under same directory of manage.py insert       
+    #  anytime you change your models:
+      $ python3 manage.py makemigrations
+      $ python3 manage.py migrate
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+    admin.py
+      # insert lines to register models to Django admin
+        $ from .models import Article
+        $ admin.site.register(Article)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    # mkdir api folder
+    <api-folder-name>
+      # serializers - converting json data into a model
+      # create __init__.py file
+      # create serializers.py file
+      # create views.py file
+      # create urls.py file
 
-### `npm run eject`
+      serializers.py
+      # insert these lines for your model (ex: Article)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+      $ from rest_framework import serializers
+      $ from <src-name>.models import Article
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+      $ class ArticleSerializer(serializers.ModelSerializer):
+      $    class Meta:
+      $        model = Article
+      $        fields = ('id','title', 'content')
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+      views.py
+        # insert these lines of code based on ModelSerializer # created
+          $ from rest_framework.generics import ListAPIView, RetrieveAPIView
+          $ from <src-name>.models import Article
+          $ from .serializers import ArticleSerializer
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+          $ class ArticleListView(ListAPIView):
+          $    queryset = Article.objects.all()
+          $    serializer_class = ArticleSerializer
 
-## Learn More
+          $  class ArticleDetailView(RetrieveAPIView):
+          $      queryset = Article.objects.all()
+          $      serializer_class = ArticleSerializer
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+      urls.py
+        $ from django.urls import path
+        $ from .views import ArticleListView, ArticleDetailView
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+        $ urlpatterns = [
+        $    path('', ArticleListView.as_view()),
+        $    path('<pk>', ArticleDetailView.as_view()),
+
+      # in-order to include api/urls.py link path under <project-name>/urls.py
+        # add this line in <project-name>/urls.py file:
+        $ path('api/', include('<src-name>.api.urls'))
+
+Frontend
+  React
+    $ sudo npm install -g create-react-app
+    $ create-react-app <project-name>
+    $ cd <project-name>
+    $ npm run eject
+    $ npm run start
+
+
+
+    <project-name>
+      <src>
+        # ant.design is similar to material UI design a component library that has been styled already
+        # install ant.design
+          $ npm install antd --save or
+          $ yarn add antd
+
+
+        App.js
+          # add this line on top:
+            $ import 'antd/dist/antd.css';
+
+        $ mkdir components
+        $ mkdir containers
+
+        <containers>
+          # create Layout.js
+          # go to ant.design webpage and copy code of layout preference
+          # paste code in Layout.js file
+          # Remove $ 'ReactDOM.render(' and $ ', mountNode)' since we are not rendering to Dom
+          # add this line:
+            $ import React from 'react';
+
+          # add these lines:
+            $ const CustomLayout = (props) => {
+            $  return(
+            $     # here place the Layout component code
+            $    );} export default CustomLayout;
+
+          # inside the Layout component and inside Content component there is this line:
+            $ <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>Content</div>
+
+          # erase 'Content' from the div tags and insert:
+            $ {props.children}
+
+          # renders whatever is being passed into Layout component
+
+        App.js
+          # add this line to import CustomLayout:
+            $ import CustomLayout from './containers/Layout';
+
+          # add these tags to display the CustomLayout into your app:
+            $ <CustomLayout>
+            $ </CustomLayout>
+
+        <components>
+          # create a new file Article.js
+          # go to ant.design webpage and choose a list design and copy the code
+          # add these lines of code:
+            $ import React from 'react'
+            $ const Articles = (props)=>{
+            $  return(
+                # paste the List design code here but
+                # remove $ 'ReactDOM.render(' and $ ', mountNode)'
+            $  );}
+            $ export default Articles;
+
+        <containers>
+           # create ArticleListView.js file
+           # create ArticleDetailView.js file
+
+          ArticleDetailView.js
+            # add these lines to ArticleDetailView.js:
+              $ import React from 'react';
+              $ import Articles from '../components/Article'
+              $ class ArticleList extends React.Component{
+
+              $   render(){
+              $     return()
+              $   }
+              $ }
+              $ export default ArticleList;
+
+         # In-order to display data from our server, we need to get the data
+            # so install package Axios
+
+         # Axios is a promise based and thus we can take advantage of
+            # async and await for more readable asynchronous code
+	       # sort of like ajax that you can make requests to post or get from server
+
+         # In Terminal under same directory as <project-name>
+          $ npm install axios --save
+          $ yarn add axios
+
+         # take all data coming from API and display that as the data in Article component
+
+         Article.js
+          # change the value data source from listData to:
+          $ dataSource={props.data}
+          # this GET data parameters that comes though Article component using props
+
+         App.css
+          # delete all code in the file
+
+         ArticleListView.js
+          $ import axios from 'axios';
+
+          # Inside of Class ArticleList copy this:
+
+          $  state ={
+          $    articles:[]
+          $  }
+          $  componentDidMount(){
+          $    axios.get('<api-url>')
+          $      .then(res => {
+          $        this.setState({
+          $          articles: res.data
+          $        });
+          $      })
+          $  }
+
+          # axios gets data and set it to state
+
+          # inside our render() methos add this line:
+            $ (<Articles data={this.state.articles}/>)
+
+          # Sending state data into articles component base on the axios GET request
+
+    # Navigate to Backend directory
+    <project-name>
+       settings.py
+
+         # specify headers to make requests to server
+            # need a package cors headers seperate package to rest-framework
+
+         # In terminal nagivate to backend directory and type:
+            $ source venv/bin/activate
+            $ cd <src-name>
+            $ pip3 install django-cors-headers
+
+         # add this to INSTALLED_APPS={
+           ...,
+           'corsheaders',
+         }
+
+         # add this to MIDDLEWARE = [
+         ...,
+         'corsheaders.middleware.CorsMiddleware',
+         ]
+
+         # at the bottom add this:
+           $ CORS_ORIGIN_ALLOW_ALL = True
+
+    # Navigate to Frontend directory
+      # react-router-dom - used for redirecting inside react app
+      # inside terminal Navigate to <project-name>
+        # install react-router-dom type:
+          $ npm install react-router-dom
+          # or
+          $ yarn add react-router-dom
+
+      <project-name>
+        <src>
+          # defines all roots that needs to be display or contain
+          # create routes.js
+            # copy these lines of code into routes.js file
+              $ import React from 'react';
+              $ import { Route } from 'react-router-dom';
+              $ import ArticleList from './containers/ArticleListView'
+              $ import ArticleDetail from './containers/ArticleDetailView'
+
+              # be a stateless component
+              $ const BaseRouter = () =>(
+                <div>
+                  <Route exact path='/' component={ArticleList}/>
+                  # :articleID indicates this a parameter (can be any name)
+                  <Route exact path='/:articleID' component={ArticleDetail}/>
+                </div>
+                );
+
+              $ export default BaseRouter;
+
+        App.js
+          # add these lines to App.js at top:
+            $ import { BrowserRouter as Router } from 'react-router-dom';
+            $ import BaseRouter from './routes';
+
+          # the Router from import evaluates all roots that are available & depending on the current path. In other words determining what needs to be render
+
+          # edit render portion by adding the Router component should look like this:
+            $ <Router>
+            $ <CustomLayout>
+            $  <BaseRouter/>
+            $ </CustomLayout>
+            $ </Router>
+
+        ArticleDetailView.js
+          # paste this code:
+            $ import React from 'react';
+            $ import axios from 'axios';
+
+            # this a build in component from ant.design
+            $ import { Card } from 'antd';
+
+            $ class ArticleDetail extends React.Component{
+
+              # since we are viewing details of specific Article is should
+              # state variable should be represent as a object not array
+            $   state ={
+            $     article:{}
+            $   }
+
+            $   componentDidMount(){
+              # querying with primary key of article
+            $     const articleID = this.props.match.params.articleID;
+            $     axios.get(`http://127.0.0.1:8000/api/${articleID}`)
+            $       .then(res => {
+            $         this.setState({
+            $           article: res.data
+            $         });
+            $       })
+            $   }
+            $    render(){
+              # output card from article of state
+            $      return(
+            $      <Card title={this.state.article.title}>
+            $         <p>{this.state.article.content}</p>
+            $      </Card>
+            $    )
+            $    }
+            $ }
+            $ export default ArticleDetail;
+
+        Layout.js
+          # add this line at the top
+            $ import { Link } from 'react-router-dom';
+
+          # wrap the link component on navigation component
+            # edit Breadcrumb component list like this:
+              <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
+              <Breadcrumb.Item><Link to="/">List</Link></Breadcrumb.Item>
+
+        Article.js
+
+          # change href tag from title to this:
+            ArticleSerializer from our django backend
+            title={<a href={`/${item.id}`}>{item.title}</a>}
+
+
+      ArticleListView
+          # Delete this from ArticleListView.js not required:
+            $ const listData = [];
+            $ for (let i = 0; i < 23; i++) {
+            $  listData.push({
+            $    href: 'http://ant.design',
+            $    title: `ant design part ${i}`,
+            $    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+            $    description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+            $    content: 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+            $  });
+            $ }

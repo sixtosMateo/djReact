@@ -23,7 +23,7 @@ const Articles =(props)=>{
           pageSize: 3,
         }}
         dataSource={props.data}
-        
+
         renderItem={item => (
           <List.Item
             key={item.title}

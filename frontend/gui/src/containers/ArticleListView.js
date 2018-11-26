@@ -13,11 +13,11 @@ class ArticleList extends React.Component{
         this.setState({
           articles: res.data
         });
-        // console.log(res.data);
+
       })
   }
    render(){
-     return <Articles data={this.state.articles}/>
+     return (<Articles data={this.state.articles}/>
    }
 }
 export default ArticleList;
