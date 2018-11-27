@@ -505,4 +505,8 @@ Frontend
                 $ </form>
 
           # this code changes should be able to connect to server(api urls) but in django setttigs.py
-            # django REST_FRAMEWORK permissions must be temporary change so that anyone can make changes  
+            # django REST_FRAMEWORK permissions must be temporary change so that anyone can make changes
+  # adding authentication
+    # start from frontend directory
+
+    
