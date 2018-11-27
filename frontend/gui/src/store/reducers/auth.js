@@ -23,3 +23,26 @@ const authStart = (state, action) => {
       loading: true
     })
 }
+
+const authSuccess = (state, action) => {
+    // action is from action/actionTypes authSuccess one parameter is token & returns
+      // an object therefore being able to grab the token here
+    return updateObject(state, {
+      token: action.token,
+      error: null,
+      loading: false
+    })
+}
+
+const authFail = (state, action) => {
+    return updateObject(state, {
+      error: action.error,
+      loading: false
+    })
+}
+
+const authLogout = (state, action) => {
+    return updateObject(state, {
+      token: null
+    })
+}
