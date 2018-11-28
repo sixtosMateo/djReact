@@ -111,6 +111,10 @@ Frontend
     $ npm run eject
     $ npm run start
 
+    $ yarn add react-redux
+    $ yarn global add add-redux
+
+    $ yarn add redux-thunk
 
 
     <project-name>
@@ -509,4 +513,8 @@ Frontend
   # adding authentication
     # start from frontend directory
 
-    
+
+frontend
+  <project-name>
+      # install a package for middle way
+          # middleware package is called redux-thunk
