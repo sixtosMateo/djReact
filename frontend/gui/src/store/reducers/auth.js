@@ -4,6 +4,8 @@ import { updateObject } from '../utility';
 // here we define our initial state
     // ex: loading any errors, authentication token
 
+// reducers recieved in the reducer as one of the params then the reducer method
+// (at the botton) taking in all the actions. Determines the type of action
 
 const initialState = {
    token: null,
@@ -11,7 +13,7 @@ const initialState = {
    loading: false
 }
 
-
+// defining our actions
 // recreating the methods that go hand to hand with our actions
 
 // must return state that is updated
@@ -58,3 +60,5 @@ const reducer = (state=initialState, action) ={
         return state;
   }
 }
+
+export default reducer;
