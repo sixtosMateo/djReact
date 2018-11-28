@@ -30,7 +30,6 @@ const store = createStore(reducer, composeEnhances(
 const app = (
   // define provider that contains reducer which handles the state manipulation
   // specify that store as property as provider
-
   <Provider store={store}>
     <App />
   </Provider>
