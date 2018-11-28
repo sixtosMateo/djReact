@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
@@ -8,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 // to create store need to import a method from redux
 import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux';
+import thunk from 'redux-thunk';
 
 
 // this reducer will be used inside our store
@@ -28,14 +27,18 @@ const store = createStore(reducer, composeEnhances(
 // need to bring our provider
     // provider is what we use to wrap our app component
     // and specify the store we are using
-const app =(
+const app = (
   // define provider that contains reducer which handles the state manipulation
   // specify that store as property as provider
+
+  <Provider store={store}>
+    <App />
+  </Provider>
 
 )
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(app, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
