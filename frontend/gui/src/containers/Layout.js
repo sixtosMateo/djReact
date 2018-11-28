@@ -14,9 +14,9 @@ const CustomLayout = (props) => {
           defaultSelectedKeys={['2']}
           style={{ lineHeight: '64px' }}
         >
-        
+
         {
-          this.props.isAuthenticated ?
+          props.isAuthenticated ?
             <Menu.Item key="2">Logout</Menu.Item>
 
             :

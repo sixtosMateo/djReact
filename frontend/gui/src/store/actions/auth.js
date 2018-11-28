@@ -72,7 +72,7 @@ export const logout = () =>{
 
 }
 
-checkAuthTimeout = expirationTime =>{
+const checkAuthTimeout = expirationTime =>{
   // setTimeout will be in millisecond so need to turn seconds into milliseconds
   return dispatch =>{
 
@@ -123,7 +123,7 @@ export const authCheckState =() =>{
   return dispatch=>{
     const token = localStorage.getItem('item');
 
-    if(token == 'undefined'){
+    if(token === 'undefined'){
       dispatch(logout);
     }
     else{
@@ -134,7 +134,7 @@ export const authCheckState =() =>{
       }
       else{
         dispatch(authSuccess(token));
-        dispatch(ceckAuthTimeout( (expirationDate.getTime() - new Date().getTime()) / 1000));
+        dispatch(checkAuthTimeout( (expirationDate.getTime() - new Date().getTime()) / 1000));
       }
     }
   }

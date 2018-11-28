@@ -33,7 +33,7 @@ class App extends Component {
   }
 }
 
-mapStateToProps = state =>{
+const mapStateToProps = state =>{
   // return object is what you want to map into a property
   return{
     isAuthenticated: state.token !== null
