@@ -103,6 +103,9 @@ Backend
         # add this line in <project-name>/urls.py file:
         $ path('api/', include('<src-name>.api.urls'))
 
+
++===============================================
+
 Frontend
   React
     $ sudo npm install -g create-react-app
@@ -518,3 +521,11 @@ frontend
   <project-name>
       # install a package for middle way
           # middleware package is called redux-thunk
+
+      index.js
+        # we import createStore from 'redux' itself
+            # createStore method has second arg called enhancer
+              # need enhancer to handle middle way of application
+            # need to install chrome extension
+
+            thunk - updating your storage when async recieve data
