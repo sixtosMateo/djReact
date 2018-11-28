@@ -117,6 +117,29 @@ export const authSignup = (username, email, password1, password2) =>{
   }
 }
 
+export const authCheckState =() =>{
+  // check if token is store at local storage if not logout
+  // if it is revaluate localStorage
+  return dispatch=>{
+    const token = localStorage.getItem('item');
+
+    if(token == 'undefined'){
+      dispatch(logout);
+    }
+    else{
+      const expirationDate = new Date(localStorage.getItem('expirationDate'));
+
+      if(expirationDate <= new Date()){
+        dispatch(logout());
+      }
+      else{
+        dispatch(authSuccess(token));
+        dispatch(ceckAuthTimeout( (expirationDate.getTime() - new Date().getTime()) / 1000));
+      }
+    }
+  }
+}
+
 
 // these methods are important because they are events that signals so that you
   // can do something else
