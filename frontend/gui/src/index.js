@@ -7,7 +7,8 @@ import * as serviceWorker from './serviceWorker';
 
 // to create store need to import a method from redux
 import { createStore, compose, applyMiddleware } from 'redux';
-import thunk from 'react-redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux';
 
 
 // this reducer will be used inside our store
@@ -23,6 +24,15 @@ const store = createStore(reducer, composeEnhances(
 
 ))
 
+//need to link store into our app
+// need to bring our provider
+    // provider is what we use to wrap our app component
+    // and specify the store we are using
+const app =(
+  // define provider that contains reducer which handles the state manipulation
+  // specify that store as property as provider
+
+)
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
