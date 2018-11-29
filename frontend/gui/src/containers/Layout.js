@@ -17,7 +17,7 @@ const CustomLayout = (props) => {
 
         {
           props.isAuthenticated ?
-            <Menu.Item key="2">Logout</Menu.Item>
+            <Menu.Item key="2" >Logout</Menu.Item>
 
             :
 

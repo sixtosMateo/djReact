@@ -24,7 +24,7 @@ class NormalLoginForm extends React.Component {
       }
     });
     // once login it will redirect you to '/' route
-    // this.props.history.push('/');
+    this.props.history.push('/');
   }
 
   render() {

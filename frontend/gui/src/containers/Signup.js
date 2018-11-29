@@ -1,7 +1,8 @@
 import React from 'react';
-
-import { Form, Input, Icon} from 'antd';
-
+import { connect } from 'react-redux';
+import { Form, Input, Icon, Button} from 'antd';
+import { NavLink } from 'react-router-dom'
+import * as actions from '../store/actions/auth';
 const FormItem = Form.Item;
 
 
@@ -14,8 +15,14 @@ class RegistrationForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        //console.log('Received values of form: ', values);
+        this.props.onAuth(
+          values.userName,
+          values.email,
+          values.password,
+          values.confirm);
       }
+      this.props.history.push('/');
     });
   }
 
@@ -68,8 +75,7 @@ class RegistrationForm extends React.Component {
           )}
         </FormItem>
 
-        <FormItem
-          {...formItemLayout} >
+        <FormItem>
           {getFieldDecorator('password', {
             rules: [{
               required: true, message: 'Please input your password!',
@@ -81,7 +87,7 @@ class RegistrationForm extends React.Component {
           )}
         </FormItem>
 
-        <FormItem {...formItemLayout}>
+        <FormItem>
           {getFieldDecorator('confirm', {
             rules: [{
               required: true, message: 'Please confirm your password!',
@@ -109,3 +115,18 @@ class RegistrationForm extends React.Component {
 }
 
 const WrappedRegistrationForm = Form.create()(RegistrationForm);
+
+const mapStateToProps= (state) =>{
+  return{
+    loading: state.loading,
+    error: state.error
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    onAuth: (username, email, password1, password2)=>(actions.authSignup(username, email, password1, password2))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(WrappedRegistrationForm);
