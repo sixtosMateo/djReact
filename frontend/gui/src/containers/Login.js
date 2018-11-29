@@ -1,8 +1,12 @@
 import React from 'react';
-
-
 import { Form, Icon, Input, Button, Spin } from 'antd';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom'
 
+
+
+
+// loding icon from ant desin
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 
@@ -61,8 +65,9 @@ class NormalLoginForm extends React.Component {
                     Login
                 </Button>
                 OR
-                <NavLink style={{marginRight: '10px'}} to='/signup'>
-                signup
+                <NavLink
+                style={{marginRight: '10px'}}
+                to='/signup/'> signup
                 </NavLink>
             </FormItem>
           </Form>
@@ -73,3 +78,13 @@ class NormalLoginForm extends React.Component {
 }
 
 const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+
+const mapStateToProps=(state)=>{
+  return{
+    loading: state.loading,
+    error: state.error
+  }
+
+}
+
+export default connect(mapStateToProps)(WrappedNormalLoginForm);

@@ -21,7 +21,7 @@ const CustomLayout = (props) => {
 
             :
 
-            <Menu.Item key="2"><Link to="/login">Login</Link> </Menu.Item>
+            <Menu.Item key="2"><Link to="/login/">Login</Link> </Menu.Item>
 
         }
 
