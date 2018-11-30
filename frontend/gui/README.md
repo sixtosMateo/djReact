@@ -16,6 +16,13 @@ Backend
     $ pip3 install django
     $ pip3 install djangorestframework
     $ django-admin startproject <project-name>
+    # takes your rest framework and makes it into an API
+      # takes all your django login methods oauth
+    $ pip3 install django-rest-auth
+
+    # enable standard registration process 
+    $ pip3 install django-allauth
+
 
   <project-name>
     settings.py
