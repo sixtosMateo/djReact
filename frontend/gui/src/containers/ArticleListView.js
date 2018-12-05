@@ -8,7 +8,7 @@ class ArticleList extends React.Component{
     articles:[]
   }
   componentDidMount(){
-    axios.get('http://127.0.0.1:8000/api/')
+    axios.get("http://127.0.0.1:8000/api/")
       .then(res => {
         this.setState({
           articles: res.data

@@ -2,7 +2,8 @@ import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../store/actions/auth'
+import * as actions from '../store/actions/auth';
+
 const { Header, Content, Footer } = Layout;
 
 
@@ -28,7 +29,9 @@ class CustomLayout extends React.Component{
 
               :
 
-              <Menu.Item key="2"><Link to="/login/">Login</Link> </Menu.Item>
+              <Menu.Item key="2">
+                <Link to="/login/">Login</Link>
+              </Menu.Item>
 
           }
 
@@ -44,7 +47,7 @@ class CustomLayout extends React.Component{
 
           </Breadcrumb>
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-          {this.props.children}
+          { this.props.children }
 
           </div>
         </Content>

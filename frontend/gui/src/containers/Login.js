@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, Icon, Input, Button, Spin } from 'antd';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom'
-import * as actions from '../store/actions/auth'
+import { NavLink } from 'react-router-dom';
+import * as actions from '../store/actions/auth';
 
 
 
@@ -19,12 +19,12 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // displayed the values on our console from form
-        // console.log('Received values of form: ', values);
         this.props.onAuth(values.userName, values.password);
+        this.props.history.push('/');
       }
     });
     // once login it will redirect you to '/' route
-    this.props.history.push('/');
+    // this.props.history.push('/');
   }
 
   render() {
@@ -69,9 +69,8 @@ class NormalLoginForm extends React.Component {
                     Login
                 </Button>
                 OR
-                <NavLink
-                style={{marginRight: '10px'}}
-                to='/signup/'> signup
+                <NavLink style={{marginRight: '10px'}} to='/signup/'>
+                 signup
                 </NavLink>
             </FormItem>
           </Form>

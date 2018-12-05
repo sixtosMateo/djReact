@@ -45,26 +45,28 @@ export const authLogin = (username, password) =>{
       const token = res.data.key;
 
       // setting up an expirationDate to one hour
-      const expirationDate = new Date(new Date().getTime +3600 * 1000);
+      const expirationDate = new Date(new Date().getTime() +3600 * 1000);
 
       localStorage.setItem('token', token);
       localStorage.setItem('expirationDate', expirationDate);
 
       // if res is successful dispatch authSuccess method with toke as args
       dispatch(authSuccess(token));
-
+      console.log('after success');
       // 3600 seconds times 1000 gives 1hr
       dispatch(checkAuthTimeout(3600));
 
     })
     .catch(err => {
+        console.log(authFail(err))
         dispatch(authFail(err))
     })
   }
 }
 
 export const logout = () =>{
-  localStorage.removeItem('user');
+
+  localStorage.removeItem('token');
   localStorage.removeItem('expirationDate');
   return{
       type: actionTypes.AUTH_LOGOUT
@@ -86,9 +88,10 @@ const checkAuthTimeout = expirationTime =>{
 
 export const authSignup = (username, email, password1, password2) =>{
   // when we login we have to return a dispatch
-  return dispatch=>{
+  return dispatch => {
     dispatch(authStart());
-    axios.post('http://127.0.0.1:8000/rest-auth/registration/', {
+
+      axios.post('http://127.0.0.1:8000/rest-auth/registration/', {
       username: username,
       email: email,
       password1: password1,
@@ -99,11 +102,12 @@ export const authSignup = (username, email, password1, password2) =>{
       const token = res.data.key;
 
       // setting up an expirationDate to one hour
-      const expirationDate = new Date(new Date().getTime +3600 * 1000);
+      const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
 
       localStorage.setItem('token', token);
       localStorage.setItem('expirationDate', expirationDate);
-
+      console.log('token', token );
+      console.log('expirationDate', expirationDate );
       // if res is successful dispatch authSuccess method with toke as args
       dispatch(authSuccess(token));
 
@@ -112,16 +116,17 @@ export const authSignup = (username, email, password1, password2) =>{
 
     })
     .catch(err => {
+        console.log("error "+ err);
         dispatch(authFail(err))
     })
   }
 }
 
-export const authCheckState =() =>{
+export const authCheckState = () =>{
   // check if token is store at local storage if not logout
   // if it is revaluate localStorage
   return dispatch=>{
-    const token = localStorage.getItem('item');
+    const token = localStorage.getItem('token');
 
     if(token === 'undefined'){
       dispatch(logout);

@@ -20,7 +20,7 @@ const initialState = {
 const authStart = (state, action) => {
     // what updateObject() method is doing is when we start we set
       // error to null and loading to true -> spinner will start spinning
-    return updateObject(state,{
+    return updateObject(state, {
       error: null,
       loading: true
     })

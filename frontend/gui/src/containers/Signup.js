@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Icon, Button} from 'antd';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import * as actions from '../store/actions/auth';
 const FormItem = Form.Item;
 
@@ -15,15 +15,19 @@ class RegistrationForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        //console.log('Received values of form: ', values);
+        console.log('Received values of form: ', values);
         this.props.onAuth(
           values.userName,
           values.email,
           values.password,
-          values.confirm);
+          values.confirm
+        );
+      }else{
+        console.log('Received values of form: ', err);
       }
-      this.props.history.push('/');
+    this.props.history.push('/');
     });
+
   }
 
   handleConfirmBlur = (e) => {
