@@ -23,7 +23,7 @@ const authStart = (state, action) => {
     return updateObject(state, {
       error: null,
       loading: true
-    })
+    });
 }
 
 const authSuccess = (state, action) => {
@@ -33,7 +33,7 @@ const authSuccess = (state, action) => {
       token: action.token,
       error: null,
       loading: false
-    })
+    });
 }
 
 const authFail = (state, action) => {

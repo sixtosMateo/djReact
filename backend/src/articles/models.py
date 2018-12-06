@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Article(models.Model):
@@ -6,4 +7,4 @@ class Article(models.Model):
     content = models.TextField()
 
     def __str__(self):
-        return self.title 
+        return self.title

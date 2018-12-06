@@ -22,10 +22,8 @@ class RegistrationForm extends React.Component {
           values.password,
           values.confirm
         );
-      }else{
-        console.log('Received values of form: ', err);
       }
-    this.props.history.push('/');
+      this.props.history.push('/');
     });
 
   }
@@ -59,6 +57,7 @@ class RegistrationForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+
         <FormItem>
           {getFieldDecorator('userName', {
             rules: [{ required: true, message: 'Please input your username!' }],
@@ -75,7 +74,7 @@ class RegistrationForm extends React.Component {
               required: true, message: 'Please input your E-mail!',
             }],
           })(
-            <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
+            <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email"  />
           )}
         </FormItem>
 
@@ -133,4 +132,4 @@ const mapDispatchToProps = dispatch =>{
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(WrappedRegistrationForm);
+export default connect(mapStateToProps, mapDispatchToProps)(WrappedRegistrationForm);
